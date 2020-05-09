@@ -61,7 +61,10 @@ class Transform(object):
         :return: Transformed DataFrame.
         """
         register_udf(spark, self.udfs_required)
-        sql = self.get_sql()
+        # sql = self.get_sql()
+        # Dick: commennt above line
+        with open(self.sql_path, 'r') as sql_file:
+            sql=sql_file.read()
         df_transformed = spark.sql(sql)
 
         return df_transformed
@@ -110,7 +113,8 @@ class Load(object):
 
         (df
          .write
-         .format('parquet')
+        #  .format('parquet')
+         .format('parqauet')
          .mode('append')
          .partitionBy(self.partition_column)
          .save(self.load_path)
@@ -133,7 +137,7 @@ class Load(object):
 
 class Impala(object):
     """
-    Impala object to refresh in-order to run impala query as soon as data Loaded to hive
+    Impala(变形) object to refresh in-order to run impala query as soon as data Loaded to hive
     """
     def __init__(self, misc_config):
         self.impala_host = misc_config.get('impala_host', 'localhost')

@@ -12,7 +12,7 @@ def send_email(e):
     receiver_email = "mndlsoft@gmail.com"
     password = "L@gError"
 
-    message = f"""\
+    message = """\
     Subject: Application {application_name} Failed!!!
 
     Application {application_name} failed with : {e}"""

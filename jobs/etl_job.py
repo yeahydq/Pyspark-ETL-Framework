@@ -60,13 +60,16 @@ def main():
     # start Spark application and get Spark session, logger and config
     spark, log, config, environment = start_spark(
         app_name='my_etl_job',
-        files=['configs/JobRPM001_config.json', 'configs/transformation.sql'])
-        # files=['configs/etl_config.json', 'configs/transformation.sql'])
+        files=['JobRPM001_config.json', 'transformation.sql'])
+        # files=['configs/JobRPM001_config.json', 'configs/transformation.sql'])
+        # files=['configs/etl_config.json', 'configs/transformation.sql']
+
 
     # log that main ETL job is starting
     log.warn('etl_job is up-and-running')
 
     # Create ETL Components
+    print("config:",config)
     try:
         tasks = [Extract(config['extract']), Transform(config['transform']), Load(config['load']), Impala(config['impala'])]
     except KeyError as e:
@@ -82,4 +85,9 @@ def main():
 
 # entry point for PySpark ETL application
 if __name__ == '__main__':
+
+    from os import listdir
+    from os.path import isfile, join
+    onlyfiles = [f for f in listdir('./') if isfile(join('./', f))]
+    print(onlyfiles)
     main()

@@ -1,8 +1,8 @@
 {
-  "extract"  : {"uri": "tests/test_data/recipes/recipes.json",
-                "clean": "True",
+  "extract"  : {"uri": "gs://dy-awesome-bucket/demo/recipes.json",
+    "clean": "True",
                 "temptable": "recipes"},
-  "transform": {"sql_path": "configs/transformation.sql",
+  "transform": {"sql_path": "transformation.sql",
                 "udfs_required":["tominutes"]},
   "load"     : {"database": "hellofresh",
                 "tablename": "recipes",

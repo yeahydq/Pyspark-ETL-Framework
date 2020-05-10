@@ -64,6 +64,7 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
     warehouse_location = abspath('spark-warehouse')
 
     if not (flag_repl or flag_debug):
+    # if False:
         # get Spark session factory
         spark_builder = (
             SparkSession
@@ -84,8 +85,8 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
                 .enableHiveSupport()
                 )
         # if inputfile.startswith('gs://') or outputfile.startswith('gs://'):
-        #     spark.conf.set('fs.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem')
-        #     spark.conf.set('fs.AbstractFileSystem.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS')
+        spark_builder.config('fs.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem')
+        spark_builder.config('fs.AbstractFileSystem.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS')
             
     # create Spark JAR packages string
     spark_jars_packages = ','.join(list(jar_packages))

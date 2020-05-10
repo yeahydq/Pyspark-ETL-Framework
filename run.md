@@ -57,17 +57,30 @@ jobs/etl_job.py
 
 
 3. run in GCP
-gcloud dataproc jobs submit pyspark --cluster=my_cluster \
-      my_script.py -- --custom-flag
+
 
 gcloud dataproc clusters create my-cluster --region=asia-east1 --image-version 1.5.1-debian10
 
+zip -ru9 packages.zip dependencies -x dependencies/__pycache__/\*
 
+gsutil cp jobs/etl_job.py gs://dy-awesome-bucket/demo/etl_job.py
+gsutil cp packages.zip gs://dy-awesome-bucket/demo/packages.zip
+gsutil cp configs/JobRPM001_config.json gs://dy-awesome-bucket/demo/JobRPM001_config.json
+gsutil cp tests/test_data/recipes/recipes.json gs://dy-awesome-bucket/demo/recipes.json
 gcloud dataproc jobs submit pyspark \
 --cluster=my-cluster \
 --region=asia-east1 \
 --py-files=packages.zip \
+--files configs/JobRPM001_config.json,configs/transformation.sql,tests/test_data/recipes/recipes.json \
 jobs/etl_job.py -- \
---files configs/JobRPM001_config.json
+--files JobRPM001_config.json,transformation.sql
+
+gcloud dataproc jobs submit pyspark \
+--cluster=my-cluster \
+--region=asia-east1 \
+--py-files=gs://dy-awesome-bucket/demo/packages.zip \
+gs://dy-awesome-bucket/demo/etl_job.py -- \
+--files gs://dy-awesome-bucket/demo/JobRPM001_config.json
+
 
 gcloud dataproc clusters delete my-cluster --region=asia-east1

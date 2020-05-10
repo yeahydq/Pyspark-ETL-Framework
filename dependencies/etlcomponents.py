@@ -114,7 +114,7 @@ class Load(object):
         (df
          .write
         #  .format('parquet')
-         .format('parqauet')
+         .format('parquet')
          .mode('append')
          .partitionBy(self.partition_column)
          .save(self.load_path)

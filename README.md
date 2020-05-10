@@ -1,3 +1,8 @@
+
+https://alexioannides.com/2019/07/28/best-practices-for-pyspark-etl-projects/
+
+
+
                              recipes-etl 
                              
 ******************************************************************

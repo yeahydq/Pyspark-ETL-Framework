@@ -21,11 +21,11 @@ def hive_ddl_from_df(df, database, table_name, path, partition_columns):
     """
     schema = json.loads(df.schema.json())
     partition_columns_str = ",\n".join([k + " " + v for k, v in partition_columns.items()])
-    pc = f"PARTITIONED BY ({partition_columns_str})" if partition_columns else ""
+    pc = "PARTITIONED BY ({partition_columns_str})" if partition_columns else ""
     columns = ",\n".join([column['name'].lower() + " " + column['type'].lower()
                           for column in schema['fields']
                           if column['name'] not in partition_columns.keys()])
-    hive_ddl = f""" CREATE EXTERNAL TABLE IF NOT EXISTS {database}.{table_name} (
+    hive_ddl = """ CREATE EXTERNAL TABLE IF NOT EXISTS {database}.{table_name} (
                     {columns} 
                     )
                     {pc}

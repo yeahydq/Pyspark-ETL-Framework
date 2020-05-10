@@ -8,10 +8,6 @@
                 "tablename": "recipes",
                 "load_path": "user/hive/warehouse/hellofresh.db/recipes",
                 "partition_cols": {"difficulty": "string"}
-                },
-  "impala"     : {"impala_host": "localhost",
-                  "database": "hellofresh",
-                  "tablename": "recipes"
-                 }
+                }
 }
 

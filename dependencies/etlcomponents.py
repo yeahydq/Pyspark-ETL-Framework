@@ -149,5 +149,11 @@ class Impala(object):
         self.tablename = misc_config.get('tablename', 'recipes')
 
     def impala_refresh(self):
-        os.system(f"impala-shell -i {self.impala_host} -q 'REFRESH {self.database}.{self.tablename}'")
-        os.system(f"impala-shell -i {self.impala_host} -q 'INVALIDATE METADATA {self.database}.{self.tablename}'")
+        # os.system(f"impala-shell -i {self.impala_host} -q 'REFRESH {self.database}.{self.tablename}'")
+        # os.system(f"impala-shell -i {self.impala_host} -q 'INVALIDATE METADATA {self.database}.{self.tablename}'")
+        os.system("""
+        impala-shell -i {self.impala_host} -q 'REFRESH {self.database}.{self.tablename}'
+        """)
+        os.system("""
+        impala-shell -i {self.impala_host} -q 'INVALIDATE METADATA {self.database}.{self.tablename}'
+        """)

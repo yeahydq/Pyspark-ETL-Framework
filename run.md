@@ -56,13 +56,14 @@ jobs/etl_job.py
 gcloud dataproc jobs submit pyspark --cluster=my_cluster \
       my_script.py -- --custom-flag
 
-gcloud dataproc clusters create my-cluster --region=asia-east1
+gcloud dataproc clusters create my-cluster --region=asia-east1 --image-version 1.5.1-debian10
+
 
 gcloud dataproc jobs submit pyspark \
 --cluster=my-cluster \
 --region=asia-east1 \
 --py-files=packages.zip \
 jobs/etl_job.py -- \
---files configs/etl_config.json
+--files configs/JobRPM001_config.json
 
 gcloud dataproc clusters delete my-cluster --region=asia-east1

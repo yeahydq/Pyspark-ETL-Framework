@@ -60,7 +60,7 @@ def main():
     # start Spark application and get Spark session, logger and config
     spark, log, config, environment = start_spark(
         app_name='my_etl_job',
-        files=['configs/JobRPM001_config.json', 'configs/transformation.sql'])
+        files=['configs/JobRPM001_config.json', 'configs/etl_config.json', 'configs/transformation.sql'])
         # files=['configs/etl_config.json', 'configs/transformation.sql'])
 
     # log that main ETL job is starting

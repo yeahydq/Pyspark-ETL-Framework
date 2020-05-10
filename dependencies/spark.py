@@ -83,7 +83,10 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
                 .config("spark.sql.warehouse.dir", warehouse_location)
                 .enableHiveSupport()
                 )
-
+        # if inputfile.startswith('gs://') or outputfile.startswith('gs://'):
+        #     spark.conf.set('fs.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem')
+        #     spark.conf.set('fs.AbstractFileSystem.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS')
+            
     # create Spark JAR packages string
     spark_jars_packages = ','.join(list(jar_packages))
     spark_builder.config('spark.jars.packages', spark_jars_packages)

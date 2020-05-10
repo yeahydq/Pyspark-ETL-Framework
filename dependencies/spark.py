@@ -84,16 +84,16 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
                 .enableHiveSupport()
                 )
 
-        # create Spark JAR packages string
-        spark_jars_packages = ','.join(list(jar_packages))
-        spark_builder.config('spark.jars.packages', spark_jars_packages)
+    # create Spark JAR packages string
+    spark_jars_packages = ','.join(list(jar_packages))
+    spark_builder.config('spark.jars.packages', spark_jars_packages)
 
-        spark_files = ','.join(list(files))
-        spark_builder.config('spark.files', spark_files)
+    spark_files = ','.join(list(files))
+    spark_builder.config('spark.files', spark_files)
 
-        # add other config params
-        for key, val in spark_config.items():
-            spark_builder.config(key, val)
+    # add other config params
+    for key, val in spark_config.items():
+        spark_builder.config(key, val)
 
     # create session and retrieve Spark logger object
     spark_sess = spark_builder.getOrCreate()
@@ -119,5 +119,6 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
         except FileNotFoundError:
             config_dict = None
 
+    spark_logger.warn('environment: ' + environment )
     return spark_sess, spark_logger, config_dict, environment
 

@@ -42,7 +42,9 @@ git config --global url."https://0b4446c109ba648212926902510d456a9f0a0b78@github
 
 git clone https://github.com/yeahydq/Pyspark-ETL-Framework.git
 
-cd Pyspark-ETL-Framework
+wget https://github.com/yeahydq/Pyspark-ETL-Framework/archive/master.zip
+unzip master.zip
+cd Pyspark-ETL-Framework*
 
 SPARK_HOME=/opt/spark
 $SPARK_HOME/bin/spark-submit \

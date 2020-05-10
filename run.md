@@ -23,6 +23,8 @@ python -m unittest tests/test_*.py
    1. local spark-submit
 
 ```bash
+sudo pip3 install pipenv
+
 sh ./build_dependencies.sh
 
 $SPARK_HOME/bin/spark-submit \
@@ -38,9 +40,10 @@ jobs/etl_job.py
 ```bash
 git config --global url."https://0b4446c109ba648212926902510d456a9f0a0b78@github.com".insteadOf "https://github.com"
 
-git clone https://github.com/yeahydq/pyspark-demo.git
+git clone https://github.com/yeahydq/Pyspark-ETL-Framework.git
 
-cd pyspark-demo
+cd Pyspark-ETL-Framework
+
 SPARK_HOME=/opt/spark
 $SPARK_HOME/bin/spark-submit \
 --master spark://54.255.135.54:7077 \
@@ -52,4 +55,14 @@ jobs/etl_job.py
 3. run in GCP
 gcloud dataproc jobs submit pyspark --cluster=my_cluster \
       my_script.py -- --custom-flag
-      
+
+gcloud dataproc clusters create my-cluster --region=asia-east1
+
+gcloud dataproc jobs submit pyspark \
+--cluster=my-cluster \
+--region=asia-east1 \
+--py-files=packages.zip \
+jobs/etl_job.py -- \
+--files configs/etl_config.json
+
+gcloud dataproc clusters delete my-cluster --region=asia-east1

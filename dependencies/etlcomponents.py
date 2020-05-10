@@ -128,7 +128,8 @@ class Load(object):
         :param df: DataFrame to load into parquet hive table
         :return: None
         """
-        spark.sql(f"CREATE DATABASE IF NOT EXISTS {self.database}")
+        # spark.sql(f"CREATE DATABASE IF NOT EXISTS {self.database}")
+        spark.sql(f'CREATE DATABASE IF NOT EXISTS {self.database}')
         ddl = hive_ddl_from_df(df, self.database, self.tablename, self.load_path, self.partition_cols)
         print(ddl)
         spark.sql(ddl)

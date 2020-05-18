@@ -70,6 +70,7 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
             SparkSession
                 .builder
                 .appName(app_name)
+                .config('spark.jars', 'configs/spark-avro_2.11-2.4.4.jar')
                 )
         # Flag required for suppressing Hive table creation (create_database_table()) and Impala REFRESH
 
@@ -82,12 +83,15 @@ def start_spark(app_name='my_spark_etl', master='local[*]', jar_packages=[],
                 .master(master)
                 .appName(app_name)
                 .config("spark.sql.warehouse.dir", warehouse_location)
+                .config('spark.jars', 'configs/spark-avro_2.11-2.4.4.jar')
                 .enableHiveSupport()
                 )
         # if inputfile.startswith('gs://') or outputfile.startswith('gs://'):
         spark_builder.config('fs.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem')
         spark_builder.config('fs.AbstractFileSystem.gs.impl', 'com.google.cloud.hadoop.fs.gcs.GoogleHadoopFS')
-            
+        # spark_builder.config('spark.jars', '/tool/spark-2.4.5-bin-hadoop2.7/jars/avro-1.8.2.jar') \
+        spark_builder.config('spark.jars', '../configs/spark-avro_2.11-2.4.4.jar') \
+
     # create Spark JAR packages string
     spark_jars_packages = ','.join(list(jar_packages))
     spark_builder.config('spark.jars.packages', spark_jars_packages)

@@ -60,13 +60,17 @@ def main():
     # start Spark application and get Spark session, logger and config
     spark, log, config, environment = start_spark(
         app_name='my_etl_job',
-        files=['JobRPM001_config.json', 'transformation.sql'])
+        # files=['JobRPM001_config.json', 'transformation.sql']
+        )
         # files=['configs/JobRPM001_config.json', 'configs/transformation.sql'])
         # files=['configs/etl_config.json', 'configs/transformation.sql']
 
 
     # log that main ETL job is starting
     log.warn('etl_job is up-and-running')
+    df = spark.read.format("avro").load("configs/account_id_schema_new.avro")
+    df.write.format("avro").save("namesAndFavColors.avro")
+    # df.select("name", "favorite_color").write.format("avro").save("namesAndFavColors.avro")
 
     # Create ETL Components
     print("config:",config)
